@@ -1,0 +1,90 @@
+{% extends "emp_app/base.html" %}
+{% load static %}
+
+{% block title %}
+Home page
+{% endblock title %}
+
+{% block css_link %}
+ <link rel="stylesheet" href="{% static 'emp_app/css/home_style.css' %}">
+ {% endblock css_link %}
+
+
+{% block main_content %}
+
+<h2 class="hdr" >
+    Employee Management System</h2>
+</div>
+
+<div class="additional">
+   <form action="{% url 'employeesFilter'  %}" method='get'>
+    <input class="search" name='search' type="text" placeholder="Search here ... ">
+   </form>
+
+   <button class="btn" id="newemp"><a href="{% url 'addEmployees'  %}">Add New</a></button>
+   
+   <div class="dropdown">
+       <button class="dropbtn">Filters </button>
+       <div class="dropdown-content">
+           <a href="">Recent Post</a>
+           <a href="">Highest Salary</a>
+           <a href="">Minimui Salary</a>
+           <a href="">Department</a>
+
+
+       </div>
+
+   </div>
+
+</div>
+<div style="overflow-x: auto;">
+ <table>
+   <tr >
+     <th>Id</th>
+     <th>Image</th>
+     <th>Name</th>
+     <th>Salary</th>
+     <th>Department</th>
+
+     <th>Email</th>
+     <th>Joining Date</th>
+
+     <th>Actions</th>
+   </tr>
+
+     <!----- Td Data here ------>
+     {% for emp in all_emp %}
+        <tr class="trhvr">
+        <td>{{emp.id}}</td>
+        <td><img class="userimg" src="{{emp.image.url}}" alt=""></td>
+        <td>{{emp.name}}</td>
+        <td>{{emp.salary}}</td>
+        <td>{{emp.dept}}</td>
+        <td>{{emp.email}}</td>
+        <td>{{emp.join_date}}</td>
+
+        <!---- update and delete buttons ----->
+        <td class='tdbtn'>
+            <button class='btn2' id='actions' >
+                <a href="{% url 'update_employee' emp.id %}">Update</a>
+
+                <a href="{% url 'deleteEmployee' emp.id %}">Delete</a>
+            </button>
+        </td>
+    
+        </tr>
+
+     {% endfor  %}
+
+     <!-----END Td Data here ------>
+
+
+ 
+  
+ </table>
+</div>
+</div>
+   
+
+
+{% endblock main_content  %}
